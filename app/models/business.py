@@ -1,6 +1,7 @@
 from .base import BaseDBModel, UUIDDBModel, CreatedUpdatedModel
 from .user import DBUser
 from tortoise import fields
+from tortoise.contrib.pydantic import pydantic_model_creator, pydantic_queryset_creator
 
 
 class DBBusiness(BaseDBModel, UUIDDBModel, CreatedUpdatedModel):
@@ -16,3 +17,8 @@ class DBBusiness(BaseDBModel, UUIDDBModel, CreatedUpdatedModel):
 
     class Meta:
         table = "businesses"
+
+
+business_pydantic = pydantic_model_creator(DBBusiness)
+businessIn_pydantic = pydantic_model_creator(DBBusiness, name="BusinessIn", exclude_readonly=True)
+business_pydantic_list = pydantic_queryset_creator(DBBusiness)
